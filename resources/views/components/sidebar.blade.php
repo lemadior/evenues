@@ -14,15 +14,15 @@
             <h5>Weather</h5>
             <span>{{ $date }}</span>
 
-            <div>
-                <ul>
-                    <li>Air Temp: {{ $weather['airTemperature'] }}°C</li>
-                    <li>Humidity: {{ $weather['humidity'] }}%</li>
-                    <li>Pressure: {{ $weather['pressure'] }}hPa</li>
-                    <li>Visibility: {{ $weather['visibility'] }}km</li>
-                    <li>Water Temp: {{ $weather['waterTemperature'] }}°C</li>
-                    <li>Wind Speed: {{ $weather['windSpeed'] }}m/s</li>
-                    <li>Wind Direction: {{ $weather['windDirection'] }}°</li>
+            <div class="weather__data">
+                <ul class="weather__list">
+                    <li class="weather__item"><span class="weather__item_label">Air Temp:</span> <span class="weather__item_data">{{ $weather['airTemperature'] }}°C</span></li>
+                    <li class="weather__item"><span class="weather__item_label">Humidity:</span> <span class="weather__item_data">{{ $weather['humidity'] }}%</span></li>
+                    <li class="weather__item"><span class="weather__item_label">Pressure:</span> <span class="weather__item_data">{{ $weather['pressure'] }}hPa</span></li>
+                    <li class="weather__item"><span class="weather__item_label">Visibility:</span> <span class="weather__item_data">{{ $weather['visibility'] }}km</span></li>
+                    <li class="weather__item"><span class="weather__item_label">Water Temp:</span> <span class="weather__item_data">{{ $weather['waterTemperature'] }}°C</span></li>
+                    <li class="weather__item"><span class="weather__item_label">Wind Speed:</span> <span class="weather__item_data">{{ $weather['windSpeed'] }}m/s</span></li>
+                    <li class="weather__item"><span class="weather__item_label">Wind Direction:</span> <span class="weather__item_data">{{ $weather['windDirection'] }}°</span></li>
                 </ul>
             </div>
         </div>
