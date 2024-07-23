@@ -3,7 +3,7 @@
 @section('title', 'Events: Admin Dashboard')
 @section('content')
     <div class="dashboard">
-        <x-sidebar eventsLink="admin.events" venuesLink="admin.venues" :date="$eventsData['currentDate']"/>
+        <x-sidebar eventsLink="admin.events" venuesLink="admin.venues" :date="$eventsData['currentDate']" :weather="$weather"/>
         <main class="main">
             <div class="container">
                 <nav class="breadcrumbs">

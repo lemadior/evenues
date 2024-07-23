@@ -124,6 +124,10 @@ return [
 
     'key' => env('APP_KEY'),
 
+    'geoip_location_service' => env('GEOIP_LOCATION_SERVICE'),
+
+    'weather_location_service' => env('WEATHER_LOCATION_SERVICE'),
+
     'cipher' => 'AES-256-CBC',
 
     /*
