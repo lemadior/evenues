@@ -12,7 +12,7 @@
         <hr/>
         <div class="weather">
             <h5>Weather</h5>
-            <span>{{ $date }}</span>
+            <span><strong>{{ $date }}</strong></span>
 
             <div class="weather__data">
                 <ul class="weather__list">
