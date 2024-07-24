@@ -6,17 +6,17 @@ namespace App\Services\Evenues\Admin;
 use App\Models\Evenues\Event;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use App\Http\Requests\Admin\EventsRequest;
-use App\Services\Evenues\ImportExternalJsonData;
+use App\Services\Evenues\ImportExternalJsonDataService;
 use RuntimeException;
 use Exception;
 
 class EventsService
 {
     const int SECOND_IN_DAY = 86399;
-    protected ImportExternalJsonData $externalApiService;
+    protected ImportExternalJsonDataService $externalApiService;
 
     public function __construct() {
-        $this->externalApiService = new ImportExternalJsonData();
+        $this->externalApiService = new ImportExternalJsonDataService();
     }
 
     public function getEvents(EventsRequest $request): array
@@ -64,26 +64,31 @@ class EventsService
     public function getWetherData(string $date): array
     {
         $weather = [];
-        $start = strtotime($date);
-        $end = (int)$start + self::SECOND_IN_DAY;
+        $start = (string)strtotime($date);
+        $end = (string)((int)$start + self::SECOND_IN_DAY);
 
         try {
-            $location = $this->externalApiService->getLocationData();
+            if ($this->externalApiService->checkLocateDataInSession()) {
+                $location = $this->externalApiService->getLocateDataFromSession();
+            } else {
+                $location = $this->externalApiService->getLocationData(true);
+            }
 
             if (!isset($location['latitude'], $location['longitude'])) {
                 throw new RuntimeException('Error. Cannot retrieve location data');
             }
 
-            $lat = $location['latitude'];
-            $lng = $location['longitude'];
+            $lat = (string)$location['latitude'];
+            $lng = (string)$location['longitude'];
 
-            $responce = $this->externalApiService->getWeatherData($lat, $lng, (string)$start, (string)$end) ;
+            $response = $this->externalApiService->getWeatherData($lat, $lng, $start, $end);
 
-            if (!$responce || count($responce) === 0 || !isset($responce['hours'])) {
+            if (!$response || count($response) === 0 || !isset($response['hours'])) {
                 throw new RuntimeException('Error. Cannot retrieve weather data');
             }
 
-            $weather = $this->parseWeatherData($responce);
+
+            $weather = $this->parseWeatherData($response, $location);
         } catch (Exception $err) {
             throw new RuntimeException($err->getMessage());
         }
@@ -91,7 +96,7 @@ class EventsService
         return $weather;
     }
 
-    public function parseWeatherData(array $data): array
+    public function parseWeatherData(array $data, array $location): array
     {
         $arr = [];
         $source = $data['meta']['source'][0];
@@ -104,6 +109,9 @@ class EventsService
 
             $arr[$param] = $value[$source];
         }
+
+        $arr['location'] = $location['city'];
+        $arr['ip'] = $location['ip'];
 
         return $arr;
     }

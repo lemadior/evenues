@@ -8,6 +8,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Services\Evenues\ImportExternalJsonDataService;
 
 class LoginController extends Controller
 {
@@ -29,8 +30,11 @@ class LoginController extends Controller
     public function loginPost(LoginRequest $request)
     {
         $data = $request->validated();
+        $service = new ImportExternalJsonDataService();
 
         if (Auth::attempt($data)) {
+            $service->getLocationData(true);
+
             return redirect()->intended(route('admin.index'));
         }
 

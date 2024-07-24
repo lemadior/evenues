@@ -296,7 +296,7 @@ aside > nav a:hover {
 }
 
 .weather span {
-    font-family: 'Raleway-Light', serif;
+    font-family: 'RobotoLight', serif;
     font-size: 12px;
 }
 
@@ -304,9 +304,33 @@ aside > nav a:hover {
     margin-block-start: 10px;
 }
 
+.weather__data h5 {
+    font-size: 15px;
+    margin-block-end: 5px;
+}
+
 .weather__list {
     padding: 0;
 }
+
+.weather .location,
+.weather .ip {
+    margin-block-start: 10px;
+    /*font-family: 'Raleway-Light', serif;*/
+}
+
+.weather .location span,
+.weather .ip span {
+    /*font-family: 'Raleway-Light', serif;*/
+    font-weight: 300;
+}
+
+.weather .location h5,
+.weather .ip h5 {
+    font-size: 15px;
+    /*font-weight: 600;*/
+}
+
 
 /*.shortener {*/
 /*    text-align: left;*/

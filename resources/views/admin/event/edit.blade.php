@@ -4,7 +4,7 @@
 @section('title', 'Event: Admin Dashboard: Edit')
 @section('content')
     <div class="dashboard">
-        <x-sidebar eventsLink="admin.events" venuesLink="admin.venues" :date="$date"/>
+        <x-sidebar eventsLink="admin.events" venuesLink="admin.venues" :date="$date" :weather="$weather"/>
         <main class="main">
             <div class="container">
                 <nav class="breadcrumbs">

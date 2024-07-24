@@ -25,6 +25,7 @@ class EventsController extends Controller
         try {
             $eventsData = $this->service->getEvents($request);
             $weather = $this->service->getWetherData(date('Y-m-d'));
+//            dd($weather);
         } catch(Exception $err) {
             redirect()->back()->with('error', $error = $err->getMessage());
         }

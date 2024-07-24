@@ -3,7 +3,7 @@
 @section('title', 'EventWeatherHub: Admin Dashboard')
 @section('content')
     <div class="dashboard">
-        <x-sidebar eventsLink="admin.events" venuesLink="admin.venues" :date="$currentDate"/>
+        <x-sidebar eventsLink="admin.events" venuesLink="admin.venues" :date="$currentDate" :weather="$weather"/>
 
         <main class="main">
             <div class="container">

@@ -128,6 +128,8 @@ return [
 
     'weather_location_service' => env('WEATHER_LOCATION_SERVICE'),
 
+    'weather_location_service_authkey' => env('WEATHER_LOCATION_SERVICE_AUTHKEY'),
+
     'cipher' => 'AES-256-CBC',
 
     /*

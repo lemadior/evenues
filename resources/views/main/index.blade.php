@@ -6,6 +6,8 @@
     <main class="main">
         <h1 class="text-center">Ultimate Event and Weather Management Platform!</h1>
 
+    @dump(session()->all());
+
         <section>
             <div class="container ">
 

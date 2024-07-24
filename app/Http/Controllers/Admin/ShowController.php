@@ -8,10 +8,17 @@ use App\Models\Evenues\Event;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use App\Services\Evenues\Admin\EventsService;
 
 
 class ShowController extends Controller
 {
+    protected EventsService $service;
+
+    public function __construct() {
+        $this->service = new EventsService();
+    }
+
     /**
      * Just show data about specified event (with venue and weather data)
      *
@@ -22,6 +29,8 @@ class ShowController extends Controller
     {
         session()->put('events_url', url()->previous());
 
-        return view('admin.event.show', compact('event'));
+        $weather = $this->service->getWetherData($event->event_date);
+
+        return view('admin.event.show', compact(['event', 'weather']));
     }
 }
