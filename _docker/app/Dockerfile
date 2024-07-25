@@ -19,6 +19,9 @@ RUN apt-get update && apt-get install -y \
 RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug
 
+RUN pecl install redis
+RUN docker-php-ext-enable redis
+
 RUN docker-php-ext-configure gd --enable-gd --with-jpeg
 RUN docker-php-ext-install mbstring exif pcntl gd
 
