@@ -20,8 +20,8 @@ class CreateController extends Controller
      */
     public function createVenue()
     {
-        $currentDate = date('d-m-Y');
-        $weather = $this->service->getWeatherData($currentDate);
+        $currentDate = date('Y-m-d');
+        $weather = $this->service->getWeather($currentDate);
 
         return view('admin.venue.create', compact(['currentDate', 'weather']));
     }
@@ -31,10 +31,10 @@ class CreateController extends Controller
      */
     public function createEvent()
     {
-        $currentDate = date('d-m-Y');
+        $currentDate = date('Y-m-d');
         $venues = Venue::all();
 
-        $weather = $this->service->getWeatherData($currentDate);
+        $weather = $this->service->getWeather($currentDate);
 
         return view('admin.event.create', compact(['currentDate', 'venues', 'weather']));
     }

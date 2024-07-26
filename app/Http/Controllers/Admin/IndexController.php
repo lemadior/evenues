@@ -19,7 +19,7 @@ class IndexController extends Controller
     public function __invoke(Request $request)
     {
         $currentDate = date('d-m-Y');
-        $weather = $this->service->getWeatherData(date('Y-m-d')) ?? [];
+        $weather = $this->service->getWeather(date('Y-m-d')) ?? [];
 
         return view('admin.index', compact(['currentDate', 'weather']));
     }

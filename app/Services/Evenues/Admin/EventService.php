@@ -6,6 +6,7 @@ namespace App\Services\Evenues\Admin;
 use App\Http\Requests\Admin\Event\UpdateRequest;
 use App\Http\Requests\Admin\Event\CreateRequest;
 use App\Models\Evenues\Event;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Laravel\Facades\Image;
 use RuntimeException;
@@ -61,6 +62,7 @@ class EventService
 
         try {
 
+            $oldDate = explode(' ', $event->event_date)[0];
             $data['event_date']=DateTime::createFromFormat('Y-m-d', $data['event_date'])->format('Y-m-d H:i:s');
 
             if ($request->hasFile('poster')) {
@@ -90,6 +92,12 @@ class EventService
 
             if ($imageChanged && !Storage::disk('public')->exists($event->poster)) {
                 Storage::put($filePath, (string)$image->encode());
+            }
+
+            if ($oldDate !== explode(' ', $data['event_date'])[0]) {
+                $redis = Cache::store('redis')->getRedis();
+
+                $redis->hdel($oldDate, $event->id);
             }
         } catch (Exception $err) {
             throw new RuntimeException($err->getMessage());

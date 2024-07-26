@@ -22,11 +22,11 @@ class ImportExternalJsonDataService
         try {
             $response = $import->client->request('GET',
                 "point?lat={$lat}&lng={$lng}&params=airTemperature,pressure,humidity,visibility,waterTemperature,windDirection,windSpeed&start={$start}&end={$end}&source=noaa",
-//                [
-//                    'headers' => [
-//                        'Authorization' => $authkey
-//                    ]
-//                ]
+                [
+                    'headers' => [
+                        'Authorization' => $authkey
+                    ]
+                ]
             );
 
         } catch (Exception $err) {

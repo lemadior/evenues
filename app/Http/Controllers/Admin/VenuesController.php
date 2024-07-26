@@ -24,7 +24,7 @@ class VenuesController extends Controller
     {
         try {
             $venuesData = $this->venuesService->getVenues($request);
-            $weather = $this->eventsService->getWeatherData(date('Y-m-d')) ?? [];
+            $weather = $this->eventsService->getWeather(date('Y-m-d')) ?? [];
         } catch(Exception $err) {
             redirect()->back()->with('error', $err->getMessage());
         }
