@@ -61,7 +61,7 @@ class EventsService
 
     }
 
-    public function getWetherData(string $date): array
+    public function getWeatherData(string $date): array
     {
         $weather = [];
         $start = (string)strtotime($date);

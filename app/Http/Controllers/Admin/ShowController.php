@@ -29,7 +29,7 @@ class ShowController extends Controller
     {
         session()->put('events_url', url()->previous());
 
-        $weather = $this->service->getWetherData($event->event_date);
+        $weather = $this->service->getWeatherData($event->event_date);
 
         return view('admin.event.show', compact(['event', 'weather']));
     }

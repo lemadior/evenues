@@ -19,7 +19,7 @@ class EditController extends Controller
     public function editEvent(Event $event)
     {
         $venues = Venue::all();
-        $weather = $this->service->getWetherData($event->event_date);
+        $weather = $this->service->getWeatherData($event->event_date);
 
         return view('admin.event.edit', compact('event', 'venues', 'weather'));
     }
@@ -27,7 +27,7 @@ class EditController extends Controller
     public function editVenue(Venue $venue)
     {
         $currentDate = date('d-m-Y');
-        $weather = $this->service->getWetherData($currentDate);
+        $weather = $this->service->getWeatherData($currentDate);
 
         return view('admin.venue.edit',compact(['venue', 'currentDate', 'weather']));
     }
