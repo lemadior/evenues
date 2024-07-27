@@ -96,7 +96,7 @@ class EventService
             }
 
             // Update weather data if the new data was provided by user
-            if ($oldDate !== explode(' ', $data['event_Date'])[0]) {
+            if ($oldDate !== explode(' ', $data['event_date'])[0]) {
                 $redis = Cache::store('redis')->getRedis();
 
                 $redis->hdel($data['event_date'], $event->id);
