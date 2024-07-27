@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Services\Evenues\Admin\EventsService;
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -18,8 +19,19 @@ class IndexController extends Controller
 
     public function __invoke(Request $request)
     {
-        $currentDate = date('d-m-Y');
-        $weather = $this->service->getWeather(date('Y-m-d')) ?? [];
+        $currentDate = date('Y-m-d');
+
+        $weather = [];
+
+        try {
+            $weather = $this->service->getWeather($currentDate);
+        } catch (Exception $err) {
+            redirect()->route('admin.index')->with([
+                'error' => $err->getMessage(),
+                'currentDate' => $currentDate,
+                'weather' => []
+            ]);
+        }
 
         return view('admin.index', compact(['currentDate', 'weather']));
     }

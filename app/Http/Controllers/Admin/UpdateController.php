@@ -28,7 +28,7 @@ class UpdateController extends Controller
         try {
             $this->eventService->updateEvent($request, $event);
         } catch (Exception $err) {
-            redirect()->back()->with('error', $error = $err->getMessage());
+            redirect()->back()->with('error', $err->getMessage());
         }
 
         return redirect()->route('admin.show.event', $event->id)->with([

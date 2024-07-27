@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Evenues\Event;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -27,10 +28,19 @@ class ShowController extends Controller
      */
     public function showEvent(Event $event)
     {
+        $weather = [];
+
         session()->put('events_url', url()->previous());
 
-        $weather = $this->service->getWeather($event->event_date, $event->id);
-
+        try {
+            $weather = $this->service->getWeather($event->event_date, $event->id);
+        } catch (Exception $err) {
+            redirect()->route('admin.show.event', $event->id)->with([
+                'error' => $err->getMessage(),
+                'event' => $event,
+                'weather' => []
+            ]);
+        }
         return view('admin.event.show', compact(['event', 'weather']));
     }
 }

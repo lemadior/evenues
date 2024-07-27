@@ -22,11 +22,22 @@ class VenuesController extends Controller
 
     public function __invoke(VenuesRequest $request)
     {
+        $weather = [];
+
         try {
             $venuesData = $this->venuesService->getVenues($request);
-            $weather = $this->eventsService->getWeather(date('Y-m-d')) ?? [];
         } catch(Exception $err) {
             redirect()->back()->with('error', $err->getMessage());
+        }
+
+        try {
+            $weather = $this->eventsService->getWeather(date('Y-m-d'));
+        } catch (Exception $err) {
+            redirect()->route('admin.venues')->with([
+                'error' => $err->getMessage(),
+                'venuesData' => $venuesData,
+                'weather' => []
+            ]);
         }
 
         return view('admin.venues', compact(['venuesData', 'weather']));

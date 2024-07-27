@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Services\Evenues;
 
+use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use App\Components\ImportDataClient;
 use RuntimeException;
@@ -28,10 +30,20 @@ class ImportExternalJsonDataService
                     ]
                 ]
             );
+        } catch (RequestException $err) {
+            Log::error('Guzzle error: ' . $err->getMessage());
 
-        } catch (Exception $err) {
+            if ($err->hasResponse()) {
+                $code = $err->getResponse()->getStatusCode();
+
+                if ($code == 402) {
+                    throw new RuntimeException('Error. Service payment Required. Exceed quota of free API requests');
+                }
+            }
+
             throw new RuntimeException($err->getMessage());
         }
+
         return json_decode($response->getBody()->getContents(), true);
     }
 

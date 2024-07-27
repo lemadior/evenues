@@ -94,10 +94,10 @@ class EventService
                 Storage::put($filePath, (string)$image->encode());
             }
 
-            if ($oldDate !== explode(' ', $data['event_date'])[0]) {
+            if ($oldDate !== explode(' ', $data['event_Date'])[0]) {
                 $redis = Cache::store('redis')->getRedis();
 
-                $redis->hdel($oldDate, $event->id);
+                $redis->hdel($data['event_date'], $event->id);
             }
         } catch (Exception $err) {
             throw new RuntimeException($err->getMessage());

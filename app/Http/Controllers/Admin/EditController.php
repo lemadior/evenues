@@ -7,6 +7,7 @@ use App\Services\Evenues\Admin\EventsService;
 use App\Http\Controllers\Controller;
 use App\Models\Evenues\Event;
 use App\Models\Evenues\Venue;
+use Exception;
 
 class EditController extends Controller
 {
@@ -19,8 +20,18 @@ class EditController extends Controller
     public function editEvent(Event $event)
     {
         $venues = Venue::all();
-        dump($event->event_date);
-        $weather = $this->service->getWeather($event->event_date, $event->id);
+        $weather = [];
+
+        try {
+            $weather = $this->service->getWeather($event->event_date, $event->id);
+        } catch (Exception $err) {
+            redirect()->route('admin.edit.event', $event->id)->with([
+                'error' => $err->getMessage(),
+                'event' => $event,
+                'venues' => $venues,
+                'weather' => []
+            ]);
+        }
 
         return view('admin.event.edit', compact('event', 'venues', 'weather'));
     }
@@ -28,7 +39,18 @@ class EditController extends Controller
     public function editVenue(Venue $venue)
     {
         $currentDate = date('Y-m-d');
-        $weather = $this->service->getWeather($currentDate);
+        $weather = [];
+
+        try {
+            $weather = $this->service->getWeather($currentDate);
+        } catch (Exception $err) {
+            redirect()->route('admin.edit.venue', $venue->id)->with([
+                'error' => $err->getMessage(),
+                'venue' => $venue,
+                'currentDate' => $currentDate,
+                'weather' => []
+            ]);
+        }
 
         return view('admin.venue.edit',compact(['venue', 'currentDate', 'weather']));
     }

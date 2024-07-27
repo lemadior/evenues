@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 use App\Services\Evenues\Admin\EventsService;
 use App\Http\Controllers\Controller;
 use App\Models\Evenues\Venue;
+use Exception;
 
 class CreateController extends Controller
 {
@@ -21,7 +22,17 @@ class CreateController extends Controller
     public function createVenue()
     {
         $currentDate = date('Y-m-d');
-        $weather = $this->service->getWeather($currentDate);
+        $weather = [];
+
+        try {
+            $weather = $this->service->getWeather($currentDate);
+        } catch (Exception $err) {
+            redirect()->route('admin.venue.create')->with([
+                'error' => $err->getMessage(),
+                'currentDate' => $currentDate,
+                'weather' => []
+            ]);
+        }
 
         return view('admin.venue.create', compact(['currentDate', 'weather']));
     }
@@ -33,8 +44,18 @@ class CreateController extends Controller
     {
         $currentDate = date('Y-m-d');
         $venues = Venue::all();
+        $weather = [];
 
-        $weather = $this->service->getWeather($currentDate);
+        try {
+            $weather = $this->service->getWeather($currentDate);
+        } catch (Exception $err) {
+            redirect()->route('admin.event.create')->with([
+                'error' => $err->getMessage(),
+                'currentDate' => $currentDate,
+                'venues' => $venues,
+                'weather' => []
+            ]);
+        }
 
         return view('admin.event.create', compact(['currentDate', 'venues', 'weather']));
     }

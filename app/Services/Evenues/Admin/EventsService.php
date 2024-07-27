@@ -4,10 +4,12 @@ declare(strict_types=1);
 namespace App\Services\Evenues\Admin;
 
 use App\Models\Evenues\Event;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use App\Http\Requests\Admin\EventsRequest;
 use App\Services\Evenues\ImportExternalJsonDataService;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use RuntimeException;
 use Exception;
 
@@ -73,10 +75,11 @@ class EventsService
 
         try {
             $redis = Cache::store('redis')->getRedis();
-
+//            dump($date, $eventId, $redis->hexists($date, $eventId));
             if ($redis->hexists($date, $eventId)) {
                 $weather = json_decode($redis->hget($date, $eventId), true, 512, JSON_THROW_ON_ERROR);
             } else {
+
                 $weather = $this->getWeatherData($date);
 
                 $redis->hset($date, $eventId , json_encode($weather, JSON_THROW_ON_ERROR));
@@ -98,9 +101,9 @@ class EventsService
         $lat = (string)$location['latitude'];
         $lng = (string)$location['longitude'];
 
-        $response = $this->externalApiService->getWeatherData($lat, $lng, $start, $end);
-
-        if (!$response || count($response) === 0 || !isset($response['hours'])) {
+        try {
+            $response = $this->externalApiService->getWeatherData($lat, $lng, $start, $end);
+        } catch (RequestException $err) {
             throw new RuntimeException('Error. Cannot retrieve weather data');
         }
 

@@ -24,10 +24,18 @@ class EventsController extends Controller
 
         try {
             $eventsData = $this->service->getEvents($request);
-            $weather = $this->service->getWeather(date('Y-m-d'));
-
         } catch(Exception $err) {
-            redirect()->back()->with('error', $error = $err->getMessage());
+            redirect()->back()->with('error', $err->getMessage());
+        }
+
+        try{
+            $weather = $this->service->getWeather(date('Y-m-d'));
+        } catch (Exception $err) {
+            redirect()->route('admin.events')->with([
+                'error' => $err->getMessage(),
+                'eventsData' => $eventsData,
+                'weather' => []
+            ]);
         }
 
         return view('admin.events', compact(['eventsData', 'weather']));
