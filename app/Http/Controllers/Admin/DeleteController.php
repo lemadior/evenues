@@ -31,7 +31,7 @@ class DeleteController extends Controller
             return redirect($previousUrl)->with('error', $err->getMessage());
         }
 
-        return redirect($previousUrl)->with('success', 'Event record deleted successfully.');
+        return redirect()->route('admin.events')->with('success', 'Event record deleted successfully.');
     }
 
     public function deleteVenue(Venue $venue)
@@ -42,6 +42,6 @@ class DeleteController extends Controller
             return redirect()->back()->with('error', $err->getMessage());
         }
 
-        return redirect()->back()->with('success', 'Venue was deleted successfully.');
+        return redirect()->route('admin.venues')->with('success', 'Venue was deleted successfully.');
     }
 }

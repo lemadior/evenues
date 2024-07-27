@@ -50,6 +50,9 @@ After that just run command:
 Through seeding an only user 'admin' will be created. But one can
 register as many users into the system as possible.
 
+**NOTE:** It may take a while due to specific of image generation!
+Please, be patient!
+
 7. Checking the service:
 
 Try to run service by address: ```http://localhost:5000```
