@@ -66,3 +66,4 @@ One can create new Event, edit or delete it. The Venues can
 be created, edited or deleted too. The weather data depends on
 event's date only. Venue is just the fake string and means nothing.
 
+**NOTE:** To switch sorting on some column just click on it header.
