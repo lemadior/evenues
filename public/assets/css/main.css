@@ -8,7 +8,6 @@
     --footer-background: #575757;
     --header-menu-color: #313131;
     --header-menu-link-color: #999999;
-    --login-form-background: #302f2f;
     --login-form-input-background: #C0C0C0;
     --login-form-input-color: #8f8f8f;
     --login-link-color: #3e3e3e;
@@ -16,9 +15,6 @@
     --table-row-background: #f1eeee;
     --student-group-color: #898181;
     --validation-error-color: #ff4500;
-    --error-border-color: #dd3030;
-    --success-background-color: #4dc94d;
-    --success-border-color: #55ad2a;
     --white-color: #fff;
     --black-color: #000;
 }
@@ -104,7 +100,6 @@
 	font-style: normal;
 	font-weight: normal;
 }
-
 
 *,
 *::before,
@@ -254,9 +249,6 @@ section {
 .breadcrumbs a:hover {
     color: #454d61;
 }
-/*.breadcrumbs span {*/
-/*    margin: 0 3px;*/
-/*}*/
 
 aside {
     min-width: 200px;
@@ -290,6 +282,7 @@ aside > nav a:hover {
     color: #436681;
 }
 
+/* Weather */
 
 .weather h5 {
     margin: 0;
@@ -316,39 +309,19 @@ aside > nav a:hover {
 .weather .location,
 .weather .ip {
     margin-block-start: 10px;
-    /*font-family: 'Raleway-Light', serif;*/
 }
 
 .weather .location span,
 .weather .ip span {
-    /*font-family: 'Raleway-Light', serif;*/
     font-weight: 300;
 }
 
 .weather .location h5,
 .weather .ip h5 {
     font-size: 15px;
-    /*font-weight: 600;*/
 }
 
-
-/*.shortener {*/
-/*    text-align: left;*/
-/*}*/
-
-/*.shortener input::placeholder {*/
-/*    color: var(--placeholder-color);*/
-/*}*/
-
-/*.shortener .text-danger {*/
-/*    font-size: 12px;*/
-/*}*/
-
-/*.full_url {*/
-/*    font-size: 13px;*/
-/*    display: inline-block;*/
-/*    max-width: 16rem;*/
-/*}*/
+/* Footer */
 
 .footer {
     height: 25px;
@@ -417,27 +390,26 @@ aside > nav a:hover {
     color: var(--white-color);
 }
 
+/* Common content */
+
 .page__heading {
-    font-family: 'PTSerif-Regular';
+    font-family: 'PTSerif-Regular', serif;
     font-weight: 500;
-    padding-left: 10px;
-    padding-right: 10px;
     font-size: 28px;
     text-align: left;
-    padding-top: 15px;
-    padding-bottom: 5px;
+    padding: 15px 10px 5px;
     border-bottom: 1px solid var(--footer-color);
     margin-block-end: 15px;
     width: max-content;
 }
 
 .page__heading h5 {
-    font-family: 'Raleway-Light';
+    font-family: 'Raleway-Light', serif;
 }
 
 .page__heading span {
     color: var(--footer-background);
-    font-family: 'Raleway-Regular';;
+    font-family: 'Raleway-Regular', serif;;
 }
 
 .page__text {
@@ -451,10 +423,6 @@ aside > nav a:hover {
 .page__text div {
     text-align: center;
 }
-
-/*.page__text div:last-child {*/
-/*    margin: 0 auto;*/
-/*}*/
 
 .page__text div:last-child ol {
     text-align: left;
@@ -505,15 +473,12 @@ aside > nav a:hover {
 .mytable {
     font-size: 15px;
     line-height: 40px;
-    /*width: 1000px;*/
     border-collapse: unset;
     overflow-x: auto;
     border-spacing: 0;
     text-align: center;
     width: 100%;
 }
-
-
 
 .mytable th:first-child {
     min-width: 40px;
@@ -522,7 +487,6 @@ aside > nav a:hover {
 .mytable > thead .asc:after {
     content: '➣';
     color: red;
-    /*margin-inline-start: 2px;*/
     font-size: 12px;
     display: inline-block;
     transform: rotate(-90deg);
@@ -614,6 +578,8 @@ aside > nav a:hover {
     color: var(--black-color);
 }
 
+/* Poster */
+
 .poster {
     width: fit-content;
     padding-inline-end: 30px;
@@ -636,6 +602,8 @@ aside > nav a:hover {
     height: 60px;
     margin-block-start: 20px;
 }
+
+/* Entity */
 
 .entity__data {
     width: 300px;
@@ -664,33 +632,31 @@ aside > nav a:hover {
     margin-block-start: 10px;
 }
 
-.student__form select {
+.entity__form select {
     width: 187px;
     color: var(--footer-background);
     outline-width: 0;
     outline-offset: 0;
 }
 
-.student__form select[multiple] {
+.entity__form select[multiple] {
     width: 100%;
     height: 255px;
     overflow-y: auto;
 }
 
-.student__form select:focus {
+.entity__form select:focus {
     outline-width: 0;
     outline-offset: 0;
     border-color: var(--footer-background);
 }
 
-
-.student__form .select_note {
+.entity__form .select_note {
     font-size: 10px;
     color: var(--footer-background);
 }
 
-.student__form .button {
-
+.entity__form .button {
     margin-block: 20px;
 }
 
@@ -706,16 +672,13 @@ aside > nav a:hover {
 .poster__edit_label {
     display: block;
     width: 100%;
-    /*text-align: left;*/
 }
 
 .entity__data input[type='file'] {
     width: 100%;
     font-size: 14px;
     line-height: 26px;
-    /* padding-inline-start: 5px; */
     border: none;
-    /* border-radius: 5px; */
     margin-block: 20px 10px;
     font-family: 'Raleway-Regular', serif;
 }
@@ -946,7 +909,7 @@ aside > nav a:hover {
     .footer__middle a {
         margin: auto;
         font-size: 15px;
-        font-family: 'Raleway-Regular';
+        font-family: 'Raleway-Regular', serif;
     }
 }
 
@@ -970,6 +933,6 @@ aside > nav a:hover {
     .footer__middle a {
         margin: auto;
         font-size: 15px;
-        font-family: 'Raleway-Regular';
+        font-family: 'Raleway-Regular', serif;
     }
 }

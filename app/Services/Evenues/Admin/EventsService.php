@@ -17,7 +17,8 @@ class EventsService
     const int SECONDS_IN_HOUR = 3600;
     protected ImportExternalJsonDataService $externalApiService;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->externalApiService = new ImportExternalJsonDataService();
     }
 
@@ -70,7 +71,7 @@ class EventsService
     {
         $weather = [];
 
-        $date =explode(' ', $date)[0];
+        $date = explode(' ', $date)[0];
 
         try {
             $redis = Cache::store('redis')->getRedis();
@@ -81,7 +82,7 @@ class EventsService
             } else {
                 $weather = $this->getWeatherData($date);
 
-                $redis->hset($date, $eventId , json_encode($weather, JSON_THROW_ON_ERROR));
+                $redis->hset($date, $eventId, json_encode($weather, JSON_THROW_ON_ERROR));
             }
         } catch (Exception $err) {
             throw new RuntimeException($err->getMessage());

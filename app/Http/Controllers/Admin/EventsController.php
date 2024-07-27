@@ -14,7 +14,8 @@ class EventsController extends Controller
     protected EventsService $service;
 
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->service = new EventsService();
     }
 
@@ -24,11 +25,11 @@ class EventsController extends Controller
 
         try {
             $eventsData = $this->service->getEvents($request);
-        } catch(Exception $err) {
+        } catch (Exception $err) {
             redirect()->back()->with('error', $err->getMessage());
         }
 
-        try{
+        try {
             $weather = $this->service->getWeather(date('Y-m-d'));
         } catch (Exception $err) {
             redirect()->route('admin.events')->with([

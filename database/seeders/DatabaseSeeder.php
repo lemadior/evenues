@@ -18,9 +18,9 @@ class DatabaseSeeder extends Seeder
 
         Venue::factory()->hasEvents(12)->create();
 
-         User::factory()->create([
-             'name' => 'admin',
-             'email' => 'admin@example.com',
-         ]);
+        User::factory()->create([
+            'name' => 'admin',
+            'email' => 'admin@example.com',
+        ]);
     }
 }

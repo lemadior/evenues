@@ -20,30 +20,30 @@ class EventService
         $data = $request->validated();
 
         try {
-        // Date stored in database as 'YYYY-mm-dd HH:mm:ss' and here its convert just 'YYYY-mm-dd' ti the full format
-        $data['event_date']=DateTime::createFromFormat('Y-m-d', $data['event_date'])->format('Y-m-d H:i:s');
+            // Date stored in database as 'YYYY-mm-dd HH:mm:ss' and here its convert just 'YYYY-mm-dd' ti the full format
+            $data['event_date'] = DateTime::createFromFormat('Y-m-d', $data['event_date'])->format('Y-m-d H:i:s');
 
-        if ($request->hasFile('poster')) {
-            $file = $request->file('poster');
+            if ($request->hasFile('poster')) {
+                $file = $request->file('poster');
 
-            // Get temporary path
-            $tempPath = $file->getRealPath();
+                // Get temporary path
+                $tempPath = $file->getRealPath();
 
-            $image = Image::read($tempPath);
+                $image = Image::read($tempPath);
 
-            // Crop image to the 800x800 pixels from the center
-            $image->cover(800, 800, 'center');
+                // Crop image to the 800x800 pixels from the center
+                $image->cover(800, 800, 'center');
 
-            // Generate unique filename
-            $fileName = $file->hashName();
+                // Generate unique filename
+                $fileName = $file->hashName();
 
-            $filePath = 'public/images/' . $fileName;
+                $filePath = 'public/images/' . $fileName;
 
-            $data['poster'] = str_replace('public/', '', $filePath);;
+                $data['poster'] = str_replace('public/', '', $filePath);;
 
-        } else {
-            throw new RuntimeException('Cannot find attached image file');
-        }
+            } else {
+                throw new RuntimeException('Cannot find attached image file');
+            }
             Event::firstOrCreate($data);
 
             if (!Storage::disk('public')->exists($data['poster'])) {
@@ -64,7 +64,7 @@ class EventService
         try {
 
             $oldDate = explode(' ', $event->event_date)[0];
-            $data['event_date']=DateTime::createFromFormat('Y-m-d', $data['event_date'])->format('Y-m-d H:i:s');
+            $data['event_date'] = DateTime::createFromFormat('Y-m-d', $data['event_date'])->format('Y-m-d H:i:s');
 
             if ($request->hasFile('poster')) {
                 $file = $request->file('poster');

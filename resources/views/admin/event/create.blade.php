@@ -21,7 +21,7 @@
                 <div class="page__text flex_row">
                     <div class="entity__data flex-column">
                         <form name='groups_form' action="{{ route('admin.events.post') }}" method='post'
-                              enctype="multipart/form-data" class="student__form">
+                              enctype="multipart/form-data" class="entity__form">
                             @csrf
 
                             <input type='text' name='name' placeholder="Event Name" value="{{ old('name') }}"/>

@@ -13,7 +13,8 @@ class EditController extends Controller
 {
     protected EventsService $service;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->service = new EventsService();
     }
 
@@ -52,6 +53,6 @@ class EditController extends Controller
             ]);
         }
 
-        return view('admin.venue.edit',compact(['venue', 'currentDate', 'weather']));
+        return view('admin.venue.edit', compact(['venue', 'currentDate', 'weather']));
     }
 }

@@ -12,7 +12,8 @@ class CreateController extends Controller
 {
     protected EventsService $service;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->service = new EventsService();
     }
 

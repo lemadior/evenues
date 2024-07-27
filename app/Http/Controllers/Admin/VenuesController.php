@@ -15,7 +15,8 @@ class VenuesController extends Controller
 
     protected EventsService $eventsService;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->venuesService = new VenuesService();
         $this->eventsService = new EventsService();
     }
@@ -26,7 +27,7 @@ class VenuesController extends Controller
 
         try {
             $venuesData = $this->venuesService->getVenues($request);
-        } catch(Exception $err) {
+        } catch (Exception $err) {
             redirect()->back()->with('error', $err->getMessage());
         }
 

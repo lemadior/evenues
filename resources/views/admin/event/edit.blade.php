@@ -22,7 +22,7 @@
                 <div class="page__text flex_row">
                     <div class="entity__data flex-column">
                         <form name='groups_form' action="{{ route('admin.update.event', $event->id) }}" method='post'
-                              enctype="multipart/form-data" class="student__form">
+                              enctype="multipart/form-data" class="entity__form">
                             @csrf
                             @method('patch')
 

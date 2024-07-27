@@ -18,7 +18,8 @@ class Venue extends Model
         'name'
     ];
 
-    public function events(): HasMany {
+    public function events(): HasMany
+    {
         return $this->hasMany(Event::class);
     }
 }
