@@ -17,6 +17,7 @@ class ImportExternalJsonDataService
     public function getWeatherData(string $lat, string $lng, string $start, string $end)
     {
         $baseUrl = config('app.weather_location_service');
+        // Authorization key from the https://api.stormglass.io service
         $authkey = config('app.weather_location_service_authkey');
 
         $import = new ImportDataClient($baseUrl);
@@ -53,7 +54,14 @@ class ImportExternalJsonDataService
             $baseUrl = config('app.geoip_location_service');
 
             $import = new ImportDataClient($baseUrl);
-            $response = $import->client->request('GET');
+            try {
+                $response = $import->client->request('GET');
+            } catch (RequestException $err) {
+                Log::error('Guzzle error: ' . $err->getMessage());
+
+                throw new RuntimeException($err->getMessage());
+            }
+
             $data = json_decode($response->getBody()->getContents(), true);
 
             $this->putLocateDataInSession($data);

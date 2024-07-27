@@ -31,6 +31,7 @@ class EventService
 
             $image = Image::read($tempPath);
 
+            // Crop image to the 800x800 pixels from the center
             $image->cover(800, 800, 'center');
 
             // Generate unique filename
@@ -94,6 +95,7 @@ class EventService
                 Storage::put($filePath, (string)$image->encode());
             }
 
+            // Update weather data if the new data was provided by user
             if ($oldDate !== explode(' ', $data['event_Date'])[0]) {
                 $redis = Cache::store('redis')->getRedis();
 

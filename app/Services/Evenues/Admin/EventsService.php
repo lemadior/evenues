@@ -4,12 +4,10 @@ declare(strict_types=1);
 namespace App\Services\Evenues\Admin;
 
 use App\Models\Evenues\Event;
-use GuzzleHttp\Exception\RequestException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use App\Http\Requests\Admin\EventsRequest;
 use App\Services\Evenues\ImportExternalJsonDataService;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
 use RuntimeException;
 use Exception;
 
@@ -18,8 +16,6 @@ class EventsService
     const int SECONDS_IN_DAY = 86399;
     const int SECONDS_IN_HOUR = 3600;
     protected ImportExternalJsonDataService $externalApiService;
-
-
 
     public function __construct() {
         $this->externalApiService = new ImportExternalJsonDataService();
@@ -51,8 +47,10 @@ class EventsService
 
     public function getEventsWithPagination(string $sorting, string $direction, string $perPage): LengthAwarePaginator
     {
+        // Set table for sorting
         $table = $sorting === 'venue' ? 'venues' : 'events';
 
+        // Set column for sorting
         $sorting = $sorting === 'venue' ? 'name' : $sorting;
 
         $events = Event::query()
@@ -67,6 +65,7 @@ class EventsService
 
     }
 
+    // Get weather date depends on existence appropriate data in the Redis.
     public function getWeather(string $date, $eventId = 0): array
     {
         $weather = [];
@@ -75,11 +74,11 @@ class EventsService
 
         try {
             $redis = Cache::store('redis')->getRedis();
-//            dump($date, $eventId, $redis->hexists($date, $eventId));
+
+            // Check if the weather data of the event has been stored in the Redis
             if ($redis->hexists($date, $eventId)) {
                 $weather = json_decode($redis->hget($date, $eventId), true, 512, JSON_THROW_ON_ERROR);
             } else {
-
                 $weather = $this->getWeatherData($date);
 
                 $redis->hset($date, $eventId , json_encode($weather, JSON_THROW_ON_ERROR));
@@ -91,6 +90,7 @@ class EventsService
         return $weather;
     }
 
+    // Get weather data for current location depends on specified date
     public function getWeatherData(string $date): array
     {
         $start = (string)strtotime($date);
@@ -103,13 +103,14 @@ class EventsService
 
         try {
             $response = $this->externalApiService->getWeatherData($lat, $lng, $start, $end);
-        } catch (RequestException $err) {
+        } catch (Exception $err) {
             throw new RuntimeException('Error. Cannot retrieve weather data');
         }
 
         return $this->parseWeatherData($response, $location);
     }
 
+    // Get location data based on latitude and longitude
     public function getCurrentLocation(): array
     {
         if ($this->externalApiService->checkLocateDataInSession()) {
@@ -125,6 +126,7 @@ class EventsService
         return $location;
     }
 
+    // Format weather (and location) data to used in blade templates
     public function parseWeatherData(array $data, array $location): array
     {
         $arr = [];

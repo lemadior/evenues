@@ -21,6 +21,13 @@ class StoreController extends Controller
         $this->eventService = new EventService();
     }
 
+    /**
+     * Save venue's data from the form to the database
+     *
+     * @param VenueCreateRequest $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function storeVenue(VenueCreateRequest $request)
     {
         try {
@@ -32,6 +39,13 @@ class StoreController extends Controller
         return redirect()->route('admin.venues')->with('success', 'New venue has been created successfully');
     }
 
+    /**
+     * Save event's data from the form to the database
+     *
+     * @param EventCreateRequest $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function storeEvent(EventCreateRequest $request)
     {
         try {

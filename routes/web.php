@@ -23,7 +23,7 @@ use App\Http\Controllers\Admin\UpdateController as AdminUpdateEntityController;
 */
 
 Route::namespace('App\Http\Controllers\Main')->group(function () {
-    Route::get('/', [HomeController::class, 'index'])->name('main.index');
+    Route::get('/', HomeController::class)->name('main.index');
 });
 
 Route::prefix('admin')->as('admin.')->namespace('App\Http\Controllers\Admin')->middleware('auth')->group(function () {

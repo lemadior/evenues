@@ -33,6 +33,7 @@ class LoginController extends Controller
         $service = new ImportExternalJsonDataService();
 
         if (Auth::attempt($data)) {
+            // Get weather data from current location (determine by IP)
             $service->getLocationData(true);
 
             return redirect()->intended(route('admin.index'));

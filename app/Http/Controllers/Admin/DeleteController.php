@@ -6,14 +6,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Evenues\Event;
 use App\Models\Evenues\Venue;
-use Exception;
 use Illuminate\Support\Facades\Cache;
+use Exception;
 
 class DeleteController extends Controller
 {
     public function deleteEvent(Event $event)
     {
+        // URL to return. In some case redirect()->back() may not works properly
         $previousUrl = session()->get('events_url', route('admin.events'));
+
         session()->forget('events_url');
 
         try {
